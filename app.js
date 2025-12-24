@@ -989,6 +989,13 @@ function drawProgressChart(rows) {
   if (!progressChart) return;
 
   const ctx = progressChart.getContext("2d");
+    const isDark =
+    document.documentElement.getAttribute("data-theme") !== "light";
+
+  const lineColor = isDark ? "#e5e7eb" : "#111827";
+  const gridColor = isDark ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.25)";
+  const textColor = isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.8)";
+
   const w = progressChart.width;
   const h = progressChart.height;
 
@@ -1020,12 +1027,14 @@ function drawProgressChart(rows) {
   ctx.moveTo(padL, padT);
   ctx.lineTo(padL, h - padB);
   ctx.lineTo(w - padR, h - padB);
-  ctx.stroke();
+  ctx.strokeStyle = gridColor;
+ctx.stroke();
   ctx.globalAlpha = 1;
 
   // Labels (simple)
   ctx.font = "12px " + getComputedStyle(document.body).fontFamily;
   ctx.globalAlpha = 0.75;
+  ctx.fillStyle = textColor;
   ctx.fillText(maxV.toFixed(1), 6, padT + 10);
   ctx.fillText(minV.toFixed(1), 6, h - padB);
   ctx.globalAlpha = 1;
@@ -1045,6 +1054,8 @@ function drawProgressChart(rows) {
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   });
+  ctx.strokeStyle = lineColor;
+ctx.lineWidth = 2;
   ctx.stroke();
 
   // Points
@@ -1053,6 +1064,7 @@ function drawProgressChart(rows) {
     const y = yFor(v);
     ctx.beginPath();
     ctx.arc(x, y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = lineColor;
     ctx.fill();
   });
 }
@@ -1589,3 +1601,4 @@ renderCurrentSession();
 renderRestNotice();
 renderProgressExerciseOptions();
 renderProgressForExercise("");
+
