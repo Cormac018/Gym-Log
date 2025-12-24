@@ -506,3 +506,18 @@ html[data-theme="light"]{
 #progressChartWrap{
   margin-top: 10px;
 }
+/* Progress tab dropdown readability */
+#progressTab select{
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+
+#progressTab option{
+  color: #111; /* native dropdowns on light bg */
+}
+
+html[data-theme="dark"] #progressTab option{
+  color: #111; /* Android Chrome requires dark text */
+}
+
